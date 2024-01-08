@@ -1,13 +1,19 @@
-[gd_scene load_steps=5 format=3 uid="uid://dou4xl8yd7ter"]
+[gd_scene load_steps=8 format=3 uid="uid://dou4xl8yd7ter"]
 
 [ext_resource type="PackedScene" uid="uid://43yie7ihcdgm" path="res://player.tscn" id="1_qlfj5"]
 [ext_resource type="PackedScene" uid="uid://b15ae37j5g4y7" path="res://mob.tscn" id="2_0ek3m"]
+[ext_resource type="FontFile" uid="uid://cjhwfcpw8uafd" path="res://fonts/Montserrat-Medium.ttf" id="3_t2vb0"]
+[ext_resource type="Script" path="res://control_score.gd" id="4_26ibx"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_mse30"]
 size = Vector3(60, 2, 60)
 
 [sub_resource type="BoxMesh" id="BoxMesh_eyg1s"]
 size = Vector3(60, 2, 60)
+
+[sub_resource type="Theme" id="Theme_32tej"]
+default_font = ExtResource("3_t2vb0")
+default_font_size = 22
 
 [node name="Main" type="Node"]
 
@@ -48,3 +54,30 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 10.4659)
 
 [node name="Mob4" parent="." instance=ExtResource("2_0ek3m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.52511, 1, 0)
+
+[node name="UserInterface" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ScoreLabel" type="Label" parent="UserInterface"]
+layout_mode = 0
+offset_left = 93.0
+offset_top = 69.0
+offset_right = 154.0
+offset_bottom = 92.0
+theme = SubResource("Theme_32tej")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Score: 0"
+script = ExtResource("4_26ibx")
+
+[node name="WinScreen" type="AcceptDialog" parent="UserInterface"]
+initial_position = 1
+ok_button_text = "Restart"
+dialog_text = "You Win!!!"
+
+[connection signal="caught" from="Mob" to="UserInterface/ScoreLabel" method="_on_mob_caught"]
+[connection signal="caught" from="Mob2" to="UserInterface/ScoreLabel" method="_on_mob_caught"]
+[connection signal="caught" from="Mob3" to="UserInterface/ScoreLabel" method="_on_mob_caught"]
+[connection signal="caught" from="Mob4" to="UserInterface/ScoreLabel" method="_on_mob_caught"]
