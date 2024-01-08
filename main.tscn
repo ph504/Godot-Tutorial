@@ -1,5 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://dou4xl8yd7ter"]
+[gd_scene load_steps=9 format=3 uid="uid://dou4xl8yd7ter"]
 
+[ext_resource type="Script" path="res://main.gd" id="1_cbxg7"]
 [ext_resource type="PackedScene" uid="uid://43yie7ihcdgm" path="res://player.tscn" id="1_qlfj5"]
 [ext_resource type="PackedScene" uid="uid://b15ae37j5g4y7" path="res://mob.tscn" id="2_0ek3m"]
 [ext_resource type="FontFile" uid="uid://cjhwfcpw8uafd" path="res://fonts/Montserrat-Medium.ttf" id="3_t2vb0"]
@@ -16,6 +17,7 @@ default_font = ExtResource("3_t2vb0")
 default_font_size = 22
 
 [node name="Main" type="Node"]
+script = ExtResource("1_cbxg7")
 
 [node name="Ground" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
@@ -61,7 +63,7 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="ScoreLabel" type="Label" parent="UserInterface"]
+[node name="ScoreLabel" type="Label" parent="UserInterface" node_paths=PackedStringArray("winScreen")]
 layout_mode = 0
 offset_left = 93.0
 offset_top = 69.0
@@ -71,6 +73,7 @@ theme = SubResource("Theme_32tej")
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Score: 0"
 script = ExtResource("4_26ibx")
+winScreen = NodePath("../WinScreen")
 
 [node name="WinScreen" type="AcceptDialog" parent="UserInterface"]
 initial_position = 1
@@ -81,3 +84,4 @@ dialog_text = "You Win!!!"
 [connection signal="caught" from="Mob2" to="UserInterface/ScoreLabel" method="_on_mob_caught"]
 [connection signal="caught" from="Mob3" to="UserInterface/ScoreLabel" method="_on_mob_caught"]
 [connection signal="caught" from="Mob4" to="UserInterface/ScoreLabel" method="_on_mob_caught"]
+[connection signal="confirmed" from="UserInterface/WinScreen" to="UserInterface/ScoreLabel" method="_on_win_screen_confirmed"]
