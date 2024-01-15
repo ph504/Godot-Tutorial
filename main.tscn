@@ -18,6 +18,7 @@ default_font_size = 22
 
 [node name="Main" type="Node"]
 script = ExtResource("1_cbxg7")
+EnemyTemplate = ExtResource("2_0ek3m")
 
 [node name="Ground" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
@@ -49,7 +50,7 @@ size = 19.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -8.72)
 
 [node name="Mob2" parent="." instance=ExtResource("2_0ek3m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.06933, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.75603, 1, 0)
 
 [node name="Mob3" parent="." instance=ExtResource("2_0ek3m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 10.4659)
@@ -80,8 +81,13 @@ initial_position = 1
 ok_button_text = "Restart"
 dialog_text = "You Win!!!"
 
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
 [connection signal="caught" from="Mob" to="UserInterface/ScoreLabel" method="_on_mob_caught"]
 [connection signal="caught" from="Mob2" to="UserInterface/ScoreLabel" method="_on_mob_caught"]
 [connection signal="caught" from="Mob3" to="UserInterface/ScoreLabel" method="_on_mob_caught"]
 [connection signal="caught" from="Mob4" to="UserInterface/ScoreLabel" method="_on_mob_caught"]
 [connection signal="confirmed" from="UserInterface/WinScreen" to="UserInterface/ScoreLabel" method="_on_win_screen_confirmed"]
+[connection signal="timeout" from="Timer" to="." method="_on_spawn_time_timeout"]
